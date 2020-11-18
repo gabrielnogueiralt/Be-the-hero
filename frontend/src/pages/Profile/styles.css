@@ -15,10 +15,6 @@
   margin-left: 24px;
 }
 
-.profile-container header span strong {
-  color: #E02041;
-}
-
 .profile-container header img {
   height: 64px;
 }
@@ -36,11 +32,11 @@
   border: 1px solid #dcdce6;
   background: transparent;
   margin-left: 16px;
-  transition: border-color 0.5s;
+  transition: border-color 0.2s;
 }
 
 .profile-container header button:hover {
-  border-color: #E02041;
+  border-color: #999;
 }
 
 .profile-container h1 {
@@ -67,15 +63,15 @@
   right: 24px;
   top: 24px;
   border: 0;
-  background: transparent;
+  background: none;
 }
 
-.profile-container ul li button:hover{
+.profile-container ul  li button:hover {
   opacity: 0.8;
 }
 
 .profile-container ul li strong {
-  display:block;
+  display: block;
   margin-bottom: 16px;
   color: #41414d;
 }
