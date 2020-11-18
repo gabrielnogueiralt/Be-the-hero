@@ -1,81 +1,76 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi'
+import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
 
 import './styles.css';
-
 import logoImg from '../../assets/logo.svg';
 
-export default function NewIncident() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [value, setValue] = useState('');
+export default function NewIncident(){
+    const [title,setTitle] = useState('');
+    const [description,setDescription] = useState('');
+    const [value,setValue] = useState('');
+    const ongId = localStorage.getItem('ongId');
+    const history = useHistory();
 
-  const history = useHistory();
+    async function handleNewIncident(e){
+        e.preventDefault();
 
-  const ongId = localStorage.getItem('ongId');
+        const data = {
+            title,
+            description,
+            value,
+        };
 
-  async function handleNewIncident(e) {
-    e.preventDefault();
+        try {
+            await api.post('incidents',data,{
+                headers: {
+                    Authorization: ongId
+                }
+            });
 
-    const data = {
-      title,
-      description,
-      value,
-    };
+            history.push('/profile');
 
-    try {
-      await api.post('incidents', data, {
-        headers: {
-          Authorization: ongId,
+        } catch (err) {
+            alert('Ocorreu um erro ao cadastrar o caso');
         }
-      })
-
-      history.push('/profile');
-    } catch (err) {
-      alert('Erro ao cadastrar caso, tente novamente.');
     }
-  }
 
-  return (
-    <div className="new-incident-container">
-      <div className="content">
-        <section>
-          <img src={logoImg} alt="Be The Hero"/>
+    return (
+        <div className="new-incident-container">
+            <div className="content">
+                <section>
+                    <img src={logoImg} alt="Be the Hero"/>
+                    <h1>Cadastrar novo caso</h1>
+                    <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
+                    <Link className="back-link" to="/profile">
+                        <FiArrowLeft size={16} color="#E02041" />
+                        Voltar para Home
+                    </Link>
+                </section>
 
-          <h1>Cadastrar novo caso</h1>
-          <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
+                <form>
+                    <input 
+                        placeholder="Titulo do caso" 
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                    <textarea 
+                        placeholder="Descrição" 
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+                    <input 
+                        placeholder="Valor em reais" 
+                        value={value}
+                        onChange={e => setValue(e.target.value)}
+                    />
 
-          <Link className="back-link" to="/profile">
-            <FiArrowLeft size={16} color="#E02041" />
-            Voltar para home
-          </Link>
-        </section>
+                    <button onClick={handleNewIncident} className="button" type="submit">Cadastrar</button>
 
-        <form onSubmit={handleNewIncident}>
-          <input 
-            placeholder="Título do caso"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-          />
-
-          <textarea 
-            placeholder="Descrição"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-          />
-
-          <input 
-            placeholder="Valor em reais"
-            value={value}
-            onChange={e => setValue(e.target.value)}
-          />
-
-          <button className="button" type="submit">Cadastrar</button>
-        </form>
-      </div>
-    </div>
-  )
+                </form>
+            </div>
+        </div>
+    );
 }

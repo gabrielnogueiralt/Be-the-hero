@@ -1,78 +1,109 @@
-import { StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet } from 'react-native'
+import Constants from 'expo-constants'
 
 export default StyleSheet.create({
-  container: {
+  detailsContainer: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: Constants.statusBarHeight + 20,
+    paddingTop: Constants.statusBarHeight + 20
   },
 
-  header: {
+  headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+
+  headerButton: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  headerButtonText: {
+    color: '#555',
+    fontWeight: 'bold',
+    marginLeft: 10
   },
 
   incident: {
     padding: 24,
-    borderRadius: 8,
+    borderRadius: 5,
     backgroundColor: '#FFF',
-    marginBottom: 16,
-    marginTop: 48,
+    marginTop: 32,
+    marginBottom: 16
   },
 
-  incidentProperty: {
+  incidentOng: {
+    fontSize: 18,
+    color: '#333',
+    fontWeight: 'bold'
+  },
+
+  incidentDescription: {
     fontSize: 14,
-    color: '#41414d',
-    fontWeight: 'bold',
-    marginTop: 24,
+    color: '#404040',
+    marginVertical: 10,
   },
 
   incidentValue: {
-    marginTop: 8,
-    fontSize: 15,
-    color: '#737380'
+    color: '#585858',
   },
 
-  contactBox: {
+  contact: {
     padding: 24,
-    borderRadius: 8,
+    borderRadius: 5,
     backgroundColor: '#FFF',
-    marginBottom: 16,
+    marginTop: 30,
+    marginBottom: 16
   },
 
   heroTitle: {
     fontWeight: 'bold',
-    fontSize: 20,
-    color: '#13131a',
-    lineHeight: 30,
+    fontSize: 18,
+    color: '#444'
   },
 
   heroDescription: {
-    fontSize: 15,
-    color: '#737380',
-    marginTop: 16,
+    fontSize: 16,
+    color: '#555',
+    marginVertical: 15
   },
-
-  actions: {
-    marginTop: 16,
+  
+  contactButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
 
-  action: {
-    backgroundColor: '#e02041',
-    borderRadius: 8,
-    height: 50,
+  buttonText: {
+    fontWeight: 'bold',
+    marginLeft: 10
+  },
+
+  buttonTextWhatsapp: {
+    color: '#E9FAEF',
+  },
+
+  buttonTextEmail: {
+    color: '#FBE8EC',
+  },
+
+  buttonWhatsapp: {
     width: '48%',
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: '#25D366',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
 
-  actionText: {
-    color: '#FFF',
-    fontSize: 15,
-    fontWeight: 'bold'
+  buttonEmail: {
+    width: '48%',
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: '#E02041',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-});
+})

@@ -1,78 +1,89 @@
-import React from 'react';
-import { Feather } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
-import * as MailComposer from 'expo-mail-composer';
+import React from 'react'
+import { FontAwesome, Feather } from '@expo/vector-icons'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native'
+import * as MailComposer from 'expo-mail-composer'
 
-import logoImg from '../../assets/logo.png';
+import styles from './styles'
 
-import styles from './styles';
+import logoImage from '../../assets/logo.png'
 
-export default function Detail() {
-  const navigation = useNavigation();
-  const route = useRoute();
+export default function Details() {
+  const navigation = useNavigation()
+  const route = useRoute()
 
-  const incident = route.params.incident;
-  const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`;
+  const incident = route.params.incident
+  const messageToSend = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de R$ ${
+    Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL' }
+    ).format(incident.value)
+  }` 
 
   function navigateBack() {
     navigation.goBack()
   }
 
-  function sendMail() {
+  function sendEmail() {
     MailComposer.composeAsync({
       subject: `Herói do caso: ${incident.title}`,
-      recipients: [incident.email],
-      body: message,
+      recipients: [ incident.email ],
+      body: messageToSend
     })
   }
 
   function sendWhatsapp() {
-    Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
+    Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${messageToSend}`)
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image source={logoImg} />
+    <View style={ styles.detailsContainer }>
 
-        <TouchableOpacity onPress={navigateBack}>
-          <Feather name="arrow-left" size={28} color="#E82041" />
+      <View style={ styles.headerContainer }>
+        <Image source={ logoImage }/>
+
+        <TouchableOpacity style={ styles.headerButton } onPress={ navigateBack }>
+          <Feather name="arrow-left" size={ 28 } color="#E02041"/>
+          <Text style={ styles.headerButtonText }>Voltar</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.incident}>
-        <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG:</Text>
-        <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
+      <View style={ styles.incident }>
+        <Text style={ styles.incidentOng }>
+          { incident.name } de { incident.city }/{ incident.uf }
+        </Text>
 
-        <Text style={styles.incidentProperty}>CASO:</Text>
-        <Text style={styles.incidentValue}>{incident.title}</Text>
+        <Text style={ styles.incidentDescription }>
+          { incident.description }
+        </Text>
 
-        <Text style={styles.incidentProperty}>VALOR:</Text>
-        <Text style={styles.incidentValue}>
-          {Intl.NumberFormat('pt-BR', { 
-            style: 'currency', 
-            currency: 'BRL' 
-          }).format(incident.value)}
+        <Text style={ styles.incidentValue }>
+        {
+          Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL' }
+          ).format(incident.value)
+        }
         </Text>
       </View>
 
-      <View style={styles.contactBox}>
-        <Text style={styles.heroTitle}>Salve o dia!</Text>
-        <Text style={styles.heroTitle}>Seja o herói desse caso.</Text>
+      <View style={ styles.contact }>
+        <Text style={ styles.heroTitle }>Salve o dia!</Text>
+        <Text style={ styles.heroTitle }>Seja o herói desse caso</Text>
 
-        <Text style={styles.heroDescription}>Entre em contato:</Text>
-
-        <View style={styles.actions}>
-          <TouchableOpacity style={styles.action} onPress={sendWhatsapp}>
-            <Text style={styles.actionText}>WhatsApp</Text>
+        <Text style={ styles.heroDescription }> Entre em contato:</Text>
+        <View style={ styles.contactButtons }>
+          <TouchableOpacity onPress={ sendWhatsapp } style={ styles.buttonWhatsapp }>
+            <FontAwesome name="whatsapp" size={ 32 } color="#E9FAEF"/>
+            <Text style={[ styles.buttonText, styles.buttonTextWhatsapp ]}>Whatsapp</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.action} onPress={sendMail}>
-            <Text style={styles.actionText}>E-mail</Text>
+          <TouchableOpacity onPress={ sendEmail } style={ styles.buttonEmail }>
+            <FontAwesome name="envelope-o" size={ 30 } color="#FBE8EC"/>
+            <Text style={[ styles.buttonText, styles.buttonTextEmail ]}>E-mail</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
-  );
+  )
 }
